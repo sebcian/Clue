@@ -37,8 +37,8 @@
 
     <!-- Include your JavaScript here for countdown and text display -->
     <script>
-        // Set the countdown time for approximately 8 days
-        var countdownTime = 8 * 24 * 60 * 60 * 1000; // 8 days in milliseconds
+        // Set the countdown time for approximately 20 minutes
+        var countdownTime = 20 * 60 * 1000; // 20 minutes in milliseconds
 
         // Update the countdown
         function updateCountdown() {
@@ -47,19 +47,24 @@
             var pageElement = document.getElementById('page');
             var hiddenTextElement = document.getElementById('hiddenText');
 
+            // Retrieve the start time from localStorage
+            var startTime = localStorage.getItem('countdownStartTime');
+
+            // If the start time is not in localStorage, set it
+            if (!startTime) {
+                startTime = new Date().getTime();
+                localStorage.setItem('countdownStartTime', startTime);
+            }
+
             // Your countdown logic here
-            var startTime = new Date().getTime();
-            
             function update() {
                 var currentTime = new Date().getTime();
                 var remainingTime = countdownTime - (currentTime - startTime);
-                var days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
                 // Display countdown on the webpage
-                countdownElement.innerText = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+                countdownElement.innerText = minutes + 'm ' + seconds + 's';
 
                 // Once the countdown is complete, update the text
                 if (remainingTime <= 0) {
