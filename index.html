@@ -22,26 +22,58 @@
             background-color: rgba(255, 255, 255, 0.7); /* Background fill with transparency */
             border-radius: 5px; /* Add border radius for a rounded look */
         }
+
+        #countdown {
+            font-size: 18px; /* Adjust font size as needed */
+            margin-top: 5px; /* Add margin to separate from other text */
+        }
     </style>
 </head>
 <body>
     <h1>Welcome to Diana's epic Scavenger hunt</h1>
     <p>First clue: <span id="page"></span></p>
-    <p id="hiddenText" style="display: none;">Find me in a Spanish gray book. Look me up at: <span id="page">√(anniversary * 9075)</span></p>
+    <p id="hiddenText" style="display: none;">Find me in a Spanish gray book. Page: <span id="page">√(anniversary * 9075)</span></p>
+    <p id="countdown">Countdown: <span id="countdownValue"></span></p>
 
     <!-- Include your JavaScript here for countdown and text display -->
     <script>
-        // Set the countdown time (in milliseconds)
-        var countdownTime = 5000; // Example: 5000 milliseconds (5 seconds)
+        // Set the countdown time for approximately 8 days
+        var countdownTime = 8 * 24 * 60 * 60 * 1000; // 8 days in milliseconds
 
         // Update the countdown
         function updateCountdown() {
+            // Get elements
+            var countdownElement = document.getElementById('countdownValue');
+            var pageElement = document.getElementById('page');
+            var hiddenTextElement = document.getElementById('hiddenText');
+
             // Your countdown logic here
-            // For example, you can use setTimeout to hide the second line and show the third line after the countdown
-            setTimeout(function () {
-                document.getElementById('page').innerText = 'Time is up!';
-                document.getElementById('hiddenText').style.display = 'block'; // Show the hidden text
-            }, countdownTime);
+            var startTime = new Date().getTime();
+            
+            function update() {
+                var currentTime = new Date().getTime();
+                var remainingTime = countdownTime - (currentTime - startTime);
+                var days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+                // Display countdown on the webpage
+                countdownElement.innerText = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+
+                // Once the countdown is complete, update the text
+                if (remainingTime <= 0) {
+                    pageElement.innerText = 'Time is up!';
+                    hiddenTextElement.style.display = 'block'; // Show the hidden text
+                    countdownElement.style.display = 'none'; // Hide the countdown
+                } else {
+                    // Call the update function every second
+                    setTimeout(update, 1000);
+                }
+            }
+
+            // Initial call to start the countdown
+            update();
         }
 
         // Call the updateCountdown function to start the countdown
