@@ -37,8 +37,8 @@
 
     <!-- Include your JavaScript here for countdown and text display -->
     <script>
-        // Set the countdown time for approximately 20 minutes
-        var countdownTime = 20 * 60 * 1000; // 20 minutes in milliseconds
+        // Set the target date and time for completion (Wednesday, November 29, 2023, 20:00 Brussels time)
+        var targetDate = new Date('2023-11-29T20:00:00Z');
 
         // Update the countdown
         function updateCountdown() {
@@ -59,12 +59,16 @@
             // Your countdown logic here
             function update() {
                 var currentTime = new Date().getTime();
-                var remainingTime = countdownTime - (currentTime - startTime);
+                var remainingTime = targetDate - (currentTime - startTime);
+
+                // Calculate days, hours, minutes, and seconds
+                var days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
                 // Display countdown on the webpage
-                countdownElement.innerText = minutes + 'm ' + seconds + 's';
+                countdownElement.innerText = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
 
                 // Once the countdown is complete, update the text
                 if (remainingTime <= 0) {
