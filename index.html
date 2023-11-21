@@ -27,13 +27,25 @@
 <body>
     <h1>Welcome to Diana's epic Scavenger hunt</h1>
     <p>First clue: <span id="page"></span></p>
-    <p>Find me in a Spanish gray book. Look me up at: <span id="page">√(anniversary * 9075)</span></p>
+    <p id="hiddenText" style="display: none;">Find me in a Spanish gray book. Look me up at: <span id="page">√(anniversary * 9075)</span></p>
 
     <!-- Include your JavaScript here for countdown and text display -->
     <script>
-        // You can add your JavaScript code here
-        // for the countdown and text display.
-        // Example: document.getElementById('page').innerText = '√(anniversary * 9075)';
+        // Set the countdown time (in milliseconds)
+        var countdownTime = 5000; // Example: 5000 milliseconds (5 seconds)
+
+        // Update the countdown
+        function updateCountdown() {
+            // Your countdown logic here
+            // For example, you can use setTimeout to hide the second line and show the third line after the countdown
+            setTimeout(function () {
+                document.getElementById('page').innerText = 'Time is up!';
+                document.getElementById('hiddenText').style.display = 'block'; // Show the hidden text
+            }, countdownTime);
+        }
+
+        // Call the updateCountdown function to start the countdown
+        updateCountdown();
     </script>
 </body>
 </html>
